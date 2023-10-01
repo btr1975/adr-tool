@@ -39,3 +39,12 @@ func (t *ShortTemplate) Render() (rendering string, err error) {
 
 	return bytesBuffer.String(), nil
 }
+
+// LongTemplate is a template with a name, a statement, and a list of options.
+type LongTemplate struct {
+	Title     string
+	Deciders  string
+	Date      string
+	Statement string
+	Options   []string
+}

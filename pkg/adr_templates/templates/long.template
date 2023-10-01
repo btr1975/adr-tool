@@ -1,0 +1,30 @@
+# {{.Title}}
+
+* Status: proposed
+* Deciders: {{.Deciders}}
+* Date: {{.Date}}
+
+## Context and Problem Statement
+
+{{.Statement}}
+
+## Considered Options
+{{ range .Options }}
+    * {{ .}}
+{{- end }}
+
+## Pros and Cons of the Options
+{{ range .Options }}
+### {{ .}}
+
+* Good, because [argument a] <!-- example -->
+* Bad, because [argument b] <!-- example -->
+{{- end }}
+
+## Decision Outcome
+
+Chosen option: "[option 1]", because [justification. e.g., only option, which meets k.o. criterion decision driver | which resolves force force | … | comes out best (see below)].
+
+## Links <!-- optional -->
+
+* [Link type] [Link to ADR] <!-- example: Refined by [ADR-0005](0005-example.md) -->
