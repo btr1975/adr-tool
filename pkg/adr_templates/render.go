@@ -1,8 +1,6 @@
 package adr_templates
 
-import (
-	"fmt"
-)
+import "bytes"
 
 // ShortTemplate is a template with a name, a statement, and a list of options.
 type ShortTemplate struct {
@@ -11,6 +9,11 @@ type ShortTemplate struct {
 	Options   []string
 }
 
+// NewShortTemplate returns a new ShortTemplate with the given title, statement, and options.
+//
+// Example:
+//
+//	template := NewShortTemplate("My Title", "My Statement", []string{"Option 1", "Option 2"})
 func NewShortTemplate(title string, statement string, options []string) *ShortTemplate {
 	return &ShortTemplate{
 		Title:     title,
@@ -19,12 +22,20 @@ func NewShortTemplate(title string, statement string, options []string) *ShortTe
 	}
 }
 
-func (t *ShortTemplate) Render() string {
+func (t *ShortTemplate) Render() (rendering string, err error) {
 	tmpl, err := GetTemplate("short.template")
 
 	if err != nil {
-		panic(err)
+		return "", err
 	}
 
-	return fmt.Sprintf(string(tmpl), t.Title, t.Statement, t.Options)
+	bytesBuffer := bytes.Buffer{}
+
+	err = tmpl.ExecuteTemplate(&bytesBuffer, "short.template", t)
+
+	if err != nil {
+		return "", err
+	}
+
+	return bytesBuffer.String(), nil
 }

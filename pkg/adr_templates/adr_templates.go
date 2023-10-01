@@ -6,6 +6,7 @@ package adr_templates
 import (
 	"embed"
 	"fmt"
+	"html/template"
 )
 
 // templateFileSystem is the filesystem that contains template files.
@@ -18,6 +19,6 @@ var templateFileSystem embed.FS
 // Example:
 //
 //	template, err := GetTemplate("template.md")
-func GetTemplate(name string) ([]byte, error) {
-	return templateFileSystem.ReadFile(fmt.Sprintf("templates/%s", name))
+func GetTemplate(name string) (template *template.Template, err error) {
+	return template.ParseFS(templateFileSystem, fmt.Sprintf("templates/%s", name))
 }

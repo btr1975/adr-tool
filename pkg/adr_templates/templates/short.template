@@ -5,10 +5,9 @@
 {{.Statement}}
 
 ## Considered Options
-
-{{range .Options}}
-* {{.Name}}
-{{end}}
+{{ range .Options }}
+* {{ .}}
+{{- end }}
 
 ## Decision Outcome
 
