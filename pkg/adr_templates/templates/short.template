@@ -1,0 +1,15 @@
+# {{.Title}}
+
+## Context and Problem Statement
+
+{{.Statement}}
+
+## Considered Options
+
+{{range .Options}}
+* {{.Name}}
+{{end}}
+
+## Decision Outcome
+
+[Decision outcome]
