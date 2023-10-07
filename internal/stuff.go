@@ -6,7 +6,7 @@ import (
 )
 
 func main() {
-	thing, err := adr_templates.NewShortTemplate("This is a great title", "I have some shit to say", []string{"mongo", "mysql"}).Render()
+	thing, err := adr_templates.NewLongTemplate("My Title", "My Deciders", "My Statement", []string{"Option 1", "Option 2"}).Render()
 
 	if err != nil {
 		panic(err)

@@ -10,7 +10,7 @@
 
 ## Considered Options
 {{ range .Options }}
-    * {{ .}}
+* {{ .}}
 {{- end }}
 
 ## Pros and Cons of the Options
@@ -19,7 +19,7 @@
 
 * Good, because [argument a] <!-- example -->
 * Bad, because [argument b] <!-- example -->
-{{- end }}
+{{ end }}
 
 ## Decision Outcome
 
