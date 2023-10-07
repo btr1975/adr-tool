@@ -13,4 +13,12 @@ func main() {
 	}
 
 	fmt.Println(thing)
+
+	thing2, err := adr_templates.NewShortTemplate("My Title", "My Deciders", []string{"Option 1", "Option 2"}).Render()
+
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Println(thing2)
 }

@@ -1,5 +1,7 @@
 # {{.Title}}
 
+* Date: {{.Date}}
+
 ## Context and Problem Statement
 
 {{.Statement}}

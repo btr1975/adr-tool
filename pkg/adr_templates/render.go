@@ -9,6 +9,7 @@ import (
 // ShortTemplate is a template with a Title, a Statement, and a list of Options.
 type ShortTemplate struct {
 	Title     string
+	Date      string
 	Statement string
 	Options   []string
 }
@@ -19,8 +20,11 @@ type ShortTemplate struct {
 //
 //	template := NewShortTemplate("My Title", "My Statement", []string{"Option 1", "Option 2"})
 func NewShortTemplate(title string, statement string, options []string) *ShortTemplate {
+	now := time.Now()
+
 	return &ShortTemplate{
 		Title:     title,
+		Date:      fmt.Sprintf("%v", now.Format("Mon Jan 2 15:04:05 MST 2006")),
 		Statement: statement,
 		Options:   options,
 	}
@@ -60,6 +64,11 @@ type LongTemplate struct {
 	Options   []string
 }
 
+// NewLongTemplate returns a new LongTemplate with the given title, deciders, statement, and options.
+//
+// Example:
+//
+//	template := NewLongTemplate("My Title", "My Deciders", "My Statement", []string{"Option 1", "Option 2"})
 func NewLongTemplate(title string, deciders string, statement string, options []string) *LongTemplate {
 	now := time.Now()
 
