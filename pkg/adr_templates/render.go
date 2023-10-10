@@ -105,3 +105,7 @@ func (t *LongTemplate) Render() (rendering string, err error) {
 
 	return bytesBuffer.String(), nil
 }
+
+type RenderTemplate interface {
+	Render() (string, error)
+}
