@@ -3,6 +3,7 @@ package adr_templates
 import (
 	"bytes"
 	"fmt"
+	"strings"
 	"time"
 )
 
@@ -12,6 +13,7 @@ type ShortTemplate struct {
 	Date      string
 	Statement string
 	Options   []string
+	FileName  string
 }
 
 // NewShortTemplate returns a new ShortTemplate with the given title, statement, and options.
@@ -27,7 +29,17 @@ func NewShortTemplate(title string, statement string, options []string) *ShortTe
 		Date:      fmt.Sprintf("%v", now.Format("Mon Jan 2 15:04:05 MST 2006")),
 		Statement: statement,
 		Options:   options,
+		FileName:  fmt.Sprintf("%v.md", strings.Join(strings.Split(strings.ToLower(title), " "), "-")),
 	}
+}
+
+// GetFileName returns the file name of the template
+//
+// Example:
+//
+//	name := GetFileName()
+func (t *ShortTemplate) GetFileName() (name string) {
+	return t.FileName
 }
 
 // Render renders the short template
@@ -62,6 +74,7 @@ type LongTemplate struct {
 	Date      string
 	Statement string
 	Options   []string
+	FileName  string
 }
 
 // NewLongTemplate returns a new LongTemplate with the given title, deciders, statement, and options.
@@ -78,7 +91,17 @@ func NewLongTemplate(title string, deciders string, statement string, options []
 		Date:      fmt.Sprintf("%v", now.Format("Mon Jan 2 15:04:05 MST 2006")),
 		Statement: statement,
 		Options:   options,
+		FileName:  fmt.Sprintf("%v.md", strings.Join(strings.Split(strings.ToLower(title), " "), "-")),
 	}
+}
+
+// GetFileName returns the file name of the template
+//
+// Example:
+//
+//	name := GetFileName()
+func (t *LongTemplate) GetFileName() (name string) {
+	return t.FileName
 }
 
 // Render renders the long template
@@ -106,6 +129,8 @@ func (t *LongTemplate) Render() (rendering string, err error) {
 	return bytesBuffer.String(), nil
 }
 
+// RenderTemplate is an interface for rendering templates.
 type RenderTemplate interface {
 	Render() (string, error)
+	GetFileName() string
 }

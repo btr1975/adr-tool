@@ -8,7 +8,7 @@ import (
 func main() {
 	thing := adr_templates.NewLongTemplate("My Title", "My Deciders", "My Statement", []string{"Option 1", "Option 2"})
 
-	err := records.WriteADR("./0001-my-title.md", thing)
+	err := records.WriteNewADR("./", thing)
 
 	if err != nil {
 		panic(err)
