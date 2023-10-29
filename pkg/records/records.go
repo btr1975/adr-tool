@@ -22,7 +22,7 @@ const (
 //
 // Example:
 //
-//	FileExists("./0001-my-title.md")
+//	FileExists("./0001-0001-my-title.md")
 func FileExists(path string) (exists bool) {
 	fileInfo, err := os.Stat(path)
 	if err == nil {
@@ -78,19 +78,37 @@ func WriteNewADR(path string, template adr_templates.RenderTemplate) (err error)
 	return err
 }
 
-func ReadADRDirectory(path string) {
-	thing, err := os.ReadDir(path)
+// GetADRs returns a list of ADRs found in the given directory.
+//
+// Example:
+//
+//	records.GetADRs("./")
+func GetADRs(path string) (found []string, err error) {
+	var foundADRS []string
 
-	if err != nil {
-		panic(err)
+	if !DirectoryExists(path) {
+		return foundADRS, fmt.Errorf("directory %s does not exist", path)
 	}
 
-	regexp.Compile(`^\d{5}-`)
+	directoryEntries, err := os.ReadDir(path)
 
-	for _, entry := range thing {
+	if err != nil {
+		return foundADRS, err
+	}
+
+	regexADR, err := regexp.Compile(`\d{4}-\S+\.md$`)
+
+	if err != nil {
+		return foundADRS, err
+	}
+
+	for _, entry := range directoryEntries {
 		if !entry.IsDir() {
-			println(entry.Name())
+			if regexADR.MatchString(entry.Name()) {
+				foundADRS = append(foundADRS, entry.Name())
+			}
 		}
 	}
 
+	return foundADRS, nil
 }
