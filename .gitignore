@@ -25,3 +25,6 @@ coverage.html
 
 # Ignore temp file
 temp_main.go
+
+# Ignore temp directory
+temp/

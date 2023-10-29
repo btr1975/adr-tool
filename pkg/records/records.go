@@ -8,6 +8,16 @@ import (
 	"regexp"
 )
 
+type Status string
+
+const (
+	Proposed   Status = "proposed"
+	Accepted   Status = "accepted"
+	Rejected   Status = "rejected"
+	Deprecated Status = "deprecated"
+	Superseded Status = "superseded"
+)
+
 // FileExists checks if a file exists and is not a directory before we try using it to prevent further errors.
 //
 // Example:
