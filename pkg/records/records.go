@@ -6,6 +6,7 @@ import (
 	"github.com/btr1975/adr-tool/pkg/adr_templates"
 	"os"
 	"regexp"
+	"strings"
 )
 
 type Status string
@@ -86,6 +87,32 @@ func WriteNewADR(path string, template adr_templates.RenderTemplate) (err error)
 	err = os.WriteFile(fullPath, []byte(render), 0644)
 
 	return err
+}
+
+// SupersedeADR supersede the given ADR with a new ADR.
+//
+// Example:
+//
+//	    thing := adr_templates.NewLongTemplate("My Title", "My Deciders", "My Statement", []string{"Option 1", "Option 2"})
+//		err := records.SupersedeADR("./", thing, "0001-my-title.md")
+func SupersedeADR(path string, template adr_templates.RenderTemplate, adr string) (err error) {
+	if !DirectoryExists(path) {
+		return fmt.Errorf("directory %s does not exist", path)
+	}
+
+	err = ChangeADRStatus(path, adr, Superseded, true)
+
+	if err != nil {
+		return err
+	}
+
+	err = WriteNewADR(path, template)
+
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
 
 // GetADRs returns a list of ADRs found in the given directory.
@@ -190,8 +217,8 @@ func GetADRNextNumber(found []string) (number int) {
 //
 // Example:
 //
-//	records.ChangeADRStatus("./", "0001-0001-my-title.md", records.Accepted)
-func ChangeADRStatus(path string, adr string, status Status) (err error) {
+//	records.ChangeADRStatus("./", "0001-my-title.md", records.Accepted, false)
+func ChangeADRStatus(path string, adr string, status Status, supersede bool) (err error) {
 	if !DirectoryExists(path) {
 		return fmt.Errorf("directory %s does not exist", path)
 	}
@@ -212,6 +239,12 @@ func ChangeADRStatus(path string, adr string, status Status) (err error) {
 
 	if err != nil {
 		return err
+	}
+
+	if !supersede {
+		if strings.Contains(regexStatus.FindString(string(adrFile)), string(Accepted)) {
+			return fmt.Errorf("ADR %s is accepted can not change status", adr)
+		}
 	}
 
 	adrFile = regexStatus.ReplaceAll(adrFile, []byte(fmt.Sprintf("* Status: %s", status)))
