@@ -185,3 +185,42 @@ func GetADRNextNumber(found []string) (number int) {
 
 	return highest + 1
 }
+
+// ChangeADRStatus changes the status of the given ADR.
+//
+// Example:
+//
+//	records.ChangeADRStatus("./", "0001-0001-my-title.md", records.Accepted)
+func ChangeADRStatus(path string, adr string, status Status) (err error) {
+	if !DirectoryExists(path) {
+		return fmt.Errorf("directory %s does not exist", path)
+	}
+
+	if !FileExists(fmt.Sprintf("%s/%s", path, adr)) {
+		return fmt.Errorf("ADR %s does not exist", adr)
+	}
+
+	fullPath := fmt.Sprintf("%s/%s", path, adr)
+
+	adrFile, err := os.ReadFile(fullPath)
+
+	if err != nil {
+		return err
+	}
+
+	regexStatus, err := regexp.Compile(`. Status: \S+`)
+
+	if err != nil {
+		return err
+	}
+
+	adrFile = regexStatus.ReplaceAll(adrFile, []byte(fmt.Sprintf("* Status: %s", status)))
+
+	err = os.WriteFile(fullPath, adrFile, 0644)
+
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
