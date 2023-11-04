@@ -1,20 +1,19 @@
 package main
 
 import (
-	"fmt"
+	"github.com/btr1975/adr-tool/pkg/adr_templates"
 	"github.com/btr1975/adr-tool/pkg/records"
 )
 
 func main() {
-	/*
-		thing := adr_templates.NewLongTemplate("My Title", "My Deciders", "My Statement", []string{"Option 1", "Option 2"})
 
-		err := records.WriteNewADR("./temp", thing)
+	thing := adr_templates.NewLongTemplate("My Title", "My Deciders", "My Statement", []string{"Option 1", "Option 2"})
 
-		if err != nil {
-			panic(err)
-		}
-	*/
+	err := records.WriteNewADR("./temp", thing)
+
+	if err != nil {
+		panic(err)
+	}
 
 	adrs, err := records.GetADRs("./temp")
 
@@ -22,5 +21,9 @@ func main() {
 		panic(err)
 	}
 
-	fmt.Printf(fmt.Sprintf("%v", adrs))
+	number := records.GetADRNextNumber(adrs)
+
+	println(number)
+
+	print(records.GetADRNumberFromInteger(999))
 }

@@ -61,7 +61,17 @@ func WriteNewADR(path string, template adr_templates.RenderTemplate) (err error)
 		return fmt.Errorf("directory %s does not exist", path)
 	}
 
-	fullPath := fmt.Sprintf("%s/%s", path, template.GetFileName())
+	found, err := GetADRs(path)
+
+	if err != nil {
+		return err
+	}
+
+	nextADR := GetADRNextNumber(found)
+
+	fullFileName := fmt.Sprintf("%s-%s", GetADRNumberFromInteger(nextADR), template.GetFileName())
+
+	fullPath := fmt.Sprintf("%s/%s", path, fullFileName)
 
 	if FileExists(fullPath) {
 		return fmt.Errorf("file %s already exists", fullPath)
@@ -111,4 +121,67 @@ func GetADRs(path string) (found []string, err error) {
 	}
 
 	return foundADRS, nil
+}
+
+// GetADRNumberFromString returns the ADR number from the given string.
+//
+// Example:
+//
+//	records.GetADRNumberFromString("0001-0001-my-title.md")
+func GetADRNumberFromString(adr string) (number int, err error) {
+	regexADRNumber, err := regexp.Compile(`^\d{4}`)
+
+	if err != nil {
+		return number, err
+	}
+
+	adrNumberString := regexADRNumber.FindString(adr)
+
+	if adrNumberString == "" {
+		return number, fmt.Errorf("could not find ADR number in %s", adr)
+	}
+
+	adrNumber, err := fmt.Sscanf(adrNumberString, "%d", &number)
+
+	if err != nil {
+		return number, err
+	}
+
+	if adrNumber != 1 {
+		return number, fmt.Errorf("could not find ADR number in %s", adr)
+	}
+
+	return number, nil
+}
+
+// GetADRNumberFromInteger returns the ADR number from the given integer.
+//
+// Example:
+//
+//	records.GetADRNumberFromInteger(1)
+func GetADRNumberFromInteger(number int) (adr string) {
+	return fmt.Sprintf("%04d", number)
+}
+
+// GetADRNextNumber returns the next ADR number from the given list of ADRs.
+//
+// Example:
+//
+//	records.GetADRNextNumber([]string{"0001-0001-my-title.md", "0001-0002-my-title.md"})
+func GetADRNextNumber(found []string) (number int) {
+	var highest int
+
+	for _, adr := range found {
+		adrNumber, err := GetADRNumberFromString(adr)
+
+		if err != nil {
+			continue
+		}
+
+		if adrNumber > highest {
+			highest = adrNumber
+		}
+	}
+
+	return highest + 1
 }
