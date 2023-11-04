@@ -6,11 +6,13 @@ import (
 )
 
 func main() {
-	template := adr_templates.NewShortTemplate("My Title", "My Statement", []string{"Option 1", "Option 2"})
+	template := adr_templates.NewShortTemplate("My Title Thing2", "My Statement", []string{"Option 1", "Option 2"})
 
-	err := records.SupersedeADR("./temp", template, "0001-my-title.md")
+	fileName, err := records.SupersedeADR("./temp", template, "0001-my-title.md")
 
 	if err != nil {
 		panic(err)
 	}
+
+	println(fileName)
 }

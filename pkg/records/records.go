@@ -56,16 +56,16 @@ func DirectoryExists(path string) (exists bool) {
 // Example:
 //
 //	    thing := adr_templates.NewLongTemplate("My Title", "My Deciders", "My Statement", []string{"Option 1", "Option 2"})
-//		err := records.WriteNewADR("./", thing)
-func WriteNewADR(path string, template adr_templates.RenderTemplate) (err error) {
+//		fileName, err := records.WriteNewADR("./", thing)
+func WriteNewADR(path string, template adr_templates.RenderTemplate) (fileName string, err error) {
 	if !DirectoryExists(path) {
-		return fmt.Errorf("directory %s does not exist", path)
+		return "", fmt.Errorf("directory %s does not exist", path)
 	}
 
 	found, err := GetADRs(path)
 
 	if err != nil {
-		return err
+		return "", err
 	}
 
 	nextADR := GetADRNextNumber(found)
@@ -75,18 +75,18 @@ func WriteNewADR(path string, template adr_templates.RenderTemplate) (err error)
 	fullPath := fmt.Sprintf("%s/%s", path, fullFileName)
 
 	if FileExists(fullPath) {
-		return fmt.Errorf("file %s already exists", fullPath)
+		return "", fmt.Errorf("file %s already exists", fullPath)
 	}
 
 	render, err := template.Render()
 
 	if err != nil {
-		return err
+		return "", err
 	}
 
 	err = os.WriteFile(fullPath, []byte(render), 0644)
 
-	return err
+	return fullFileName, err
 }
 
 // SupersedeADR supersede the given ADR with a new ADR.
@@ -95,24 +95,30 @@ func WriteNewADR(path string, template adr_templates.RenderTemplate) (err error)
 //
 //	    thing := adr_templates.NewLongTemplate("My Title", "My Deciders", "My Statement", []string{"Option 1", "Option 2"})
 //		err := records.SupersedeADR("./", thing, "0001-my-title.md")
-func SupersedeADR(path string, template adr_templates.RenderTemplate, adr string) (err error) {
+func SupersedeADR(path string, template adr_templates.RenderTemplate, adr string) (fileName string, err error) {
 	if !DirectoryExists(path) {
-		return fmt.Errorf("directory %s does not exist", path)
+		return "", fmt.Errorf("directory %s does not exist", path)
 	}
 
 	err = ChangeADRStatus(path, adr, Superseded, true)
 
 	if err != nil {
-		return err
+		return "", err
 	}
 
-	err = WriteNewADR(path, template)
+	fileName, err = WriteNewADR(path, template)
 
 	if err != nil {
-		return err
+		return "", err
 	}
 
-	return nil
+	err = AppendSupersededBy(path, adr, fileName)
+
+	if err != nil {
+		return fileName, err
+	}
+
+	return fileName, nil
 }
 
 // GetADRs returns a list of ADRs found in the given directory.
@@ -254,6 +260,54 @@ func ChangeADRStatus(path string, adr string, status Status, supersede bool) (er
 	if err != nil {
 		return err
 	}
+
+	return nil
+}
+
+// AppendToFile appends the given string to the given file.
+//
+// Example:
+//
+//	records.AppendToFile("./0001-my-title.md", "My Append")
+func AppendToFile(fullPath string, append string) (err error) {
+	if !FileExists(fmt.Sprintf("%s", fullPath)) {
+		return fmt.Errorf("file %s does not exist", fullPath)
+	}
+
+	file, err := os.OpenFile(fullPath, os.O_APPEND|os.O_WRONLY, 0644)
+	defer file.Close()
+
+	if err != nil {
+		return err
+	}
+
+	_, err = file.WriteString(fmt.Sprintf("%s", append))
+
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// AppendSupersededBy appends the superseded by and supersedes to the given ADRs.
+//
+// Example:
+//
+//	records.AppendSupersededBy("./", "0001-my-title.md", "0002-my-title.md")
+func AppendSupersededBy(path string, adr string, supersededBy string) (err error) {
+	supersededFullPath := fmt.Sprintf("%s/%s", path, adr)
+	supersededAppend := fmt.Sprintf("* [Superseded By: %s](./%s)\n", supersededBy, supersededBy)
+	newFullPath := fmt.Sprintf("%s/%s", path, supersededBy)
+	newAppend := fmt.Sprintf("* [Supersedes: %s](./%s)\n", adr, adr)
+
+	err = AppendToFile(supersededFullPath, supersededAppend)
+
+	if err != nil {
+		return err
+	}
+
+	err = AppendToFile(newFullPath, newAppend)
 
 	return nil
 }
