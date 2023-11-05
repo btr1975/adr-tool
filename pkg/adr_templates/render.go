@@ -18,6 +18,10 @@ type ShortTemplate struct {
 
 // NewShortTemplate returns a new ShortTemplate with the given title, statement, and options.
 //
+//	:param title: The title of the ADR.
+//	:param statement: The statement of the ADR.
+//	:param options: The options of the ADR.
+//
 // Example:
 //
 //	template := NewShortTemplate("My Title", "My Statement", []string{"Option 1", "Option 2"})
@@ -78,6 +82,11 @@ type LongTemplate struct {
 }
 
 // NewLongTemplate returns a new LongTemplate with the given title, deciders, statement, and options.
+//
+//	:param title: The title of the ADR.
+//	:param deciders: The deciders of the ADR.
+//	:param statement: The statement of the ADR.
+//	:param options: The options of the ADR.
 //
 // Example:
 //

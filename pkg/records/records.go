@@ -1,3 +1,6 @@
+/*
+Package records provides functions for working with ADRs.
+*/
 package records
 
 import (
@@ -21,9 +24,11 @@ const (
 
 // FileExists checks if a file exists and is not a directory before we try using it to prevent further errors.
 //
+//	:param path: The path to the file to check.
+//
 // Example:
 //
-//	FileExists("./0001-0001-my-title.md")
+//	exists = FileExists("./0001-0001-my-title.md")
 func FileExists(path string) (exists bool) {
 	fileInfo, err := os.Stat(path)
 	if err == nil {
@@ -37,9 +42,11 @@ func FileExists(path string) (exists bool) {
 
 // DirectoryExists checks if a directory exists and is not a file before we try using it to prevent further errors.
 //
+//	:param path: The path to the directory to check.
+//
 // Example:
 //
-//	DirectoryExists("./")
+//	exists = DirectoryExists("./")
 func DirectoryExists(path string) (exists bool) {
 	directoryInfo, err := os.Stat(path)
 	if err == nil {
@@ -52,6 +59,9 @@ func DirectoryExists(path string) (exists bool) {
 }
 
 // WriteNewADR writes a new ADR file to the filesystem.
+//
+//	:param path: The path to the directory to write the ADR to.
+//	:param template: The template to use to render the ADR.
 //
 // Example:
 //
@@ -91,6 +101,10 @@ func WriteNewADR(path string, template adr_templates.RenderTemplate) (fileName s
 
 // SupersedeADR supersede the given ADR with a new ADR.
 //
+//	:param path: The path to the directory to write the ADR to.
+//	:param template: The template to use to render the ADR.
+//	:param adr: The ADR to supersede.
+//
 // Example:
 //
 //	    thing := adr_templates.NewLongTemplate("My Title", "My Deciders", "My Statement", []string{"Option 1", "Option 2"})
@@ -122,6 +136,8 @@ func SupersedeADR(path string, template adr_templates.RenderTemplate, adr string
 }
 
 // GetADRs returns a list of ADRs found in the given directory.
+//
+//	:param path: The path to the directory to search for ADRs.
 //
 // Example:
 //
@@ -158,6 +174,8 @@ func GetADRs(path string) (found []string, err error) {
 
 // GetADRNumberFromString returns the ADR number from the given string.
 //
+//	:param adr: The ADR to get the number from.
+//
 // Example:
 //
 //	records.GetADRNumberFromString("0001-0001-my-title.md")
@@ -189,6 +207,8 @@ func GetADRNumberFromString(adr string) (number int, err error) {
 
 // GetADRNumberFromInteger returns the ADR number from the given integer.
 //
+//	:param number: The ADR number to get the string from.
+//
 // Example:
 //
 //	records.GetADRNumberFromInteger(1)
@@ -197,6 +217,8 @@ func GetADRNumberFromInteger(number int) (adr string) {
 }
 
 // GetADRNextNumber returns the next ADR number from the given list of ADRs.
+//
+//	:param found: The list of ADRs to get the next number from.
 //
 // Example:
 //
@@ -220,6 +242,11 @@ func GetADRNextNumber(found []string) (number int) {
 }
 
 // ChangeADRStatus changes the status of the given ADR.
+//
+//	:param path: The path to the directory to search for ADRs.
+//	:param adr: The ADR to change the status of.
+//	:param status: The status to change the ADR to.
+//	:param supersede: Whether to allow superseding the ADR.
 //
 // Example:
 //
@@ -266,6 +293,9 @@ func ChangeADRStatus(path string, adr string, status Status, supersede bool) (er
 
 // AppendToFile appends the given string to the given file.
 //
+//	:param fullPath: The full path to the file to append to.
+//	:param append: The string to append to the file.
+//
 // Example:
 //
 //	records.AppendToFile("./0001-my-title.md", "My Append")
@@ -291,6 +321,10 @@ func AppendToFile(fullPath string, append string) (err error) {
 }
 
 // AppendSupersededBy appends the superseded by and supersedes to the given ADRs.
+//
+//	:param path: The path to the directory to search for ADRs.
+//	:param adr: The ADR to append to.
+//	:param supersededBy: The ADR that supersedes the given ADR.
 //
 // Example:
 //

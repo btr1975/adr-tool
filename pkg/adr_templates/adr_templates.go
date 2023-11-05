@@ -16,6 +16,8 @@ var templateFileSystem embed.FS
 
 // GetTemplate returns the template with the given name.
 //
+//	:param name: The name of the template to return.
+//
 // Example:
 //
 //	template, err := GetTemplate("template.md")
