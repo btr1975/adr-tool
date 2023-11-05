@@ -1,5 +1,5 @@
 /*
-Copyright © 2023 NAME HERE <EMAIL ADDRESS>
+Package longadr implements the long-adr command
 */
 package longadr
 
@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"github.com/btr1975/adr-tool/pkg/adr_templates"
 	"github.com/btr1975/adr-tool/pkg/records"
+	"os"
 
 	"github.com/spf13/cobra"
 )
@@ -29,6 +30,7 @@ var LongCmd = &cobra.Command{
 
 		if err != nil {
 			fmt.Println(err)
+			os.Exit(1)
 		} else {
 			fmt.Printf("ADR created: %v\n", fileName)
 		}

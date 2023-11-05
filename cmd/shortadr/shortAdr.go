@@ -1,5 +1,5 @@
 /*
-Package shortadr implements the command to create a short ADR
+Package shortadr implements the short-adr command
 */
 package shortadr
 
@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"github.com/btr1975/adr-tool/pkg/adr_templates"
 	"github.com/btr1975/adr-tool/pkg/records"
+	"os"
 
 	"github.com/spf13/cobra"
 )
@@ -28,6 +29,7 @@ var ShortCmd = &cobra.Command{
 
 		if err != nil {
 			fmt.Println(err)
+			os.Exit(1)
 		} else {
 			fmt.Printf("ADR created: %v\n", fileName)
 		}

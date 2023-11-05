@@ -4,6 +4,7 @@ Package cmd implements the command line for the adr-tool
 package cmd
 
 import (
+	"github.com/btr1975/adr-tool/cmd/changestatus"
 	"github.com/btr1975/adr-tool/cmd/longadr"
 	"github.com/btr1975/adr-tool/cmd/shortadr"
 	"os"
@@ -15,7 +16,11 @@ import (
 var rootCmd = &cobra.Command{
 	Use:   "adr-tool",
 	Short: "A Simple tool for managing Architecture Decision Records",
-	Long:  `A Simple tool for managing Architecture Decision Records`,
+	Long: `A Simple tool for managing Architecture Decision Records
+Example usage:
+	adr-tool short-adr -p ./dir -t "Some Title" -s "Statement of Decision" -o "opt 1" -o "opt 2" -o "opt 3"
+	adr-tool long-adr -p ./dir -t "Some Title" -s "Statement of Decision" -o "opt 1" -o "opt 2" -o "opt 3" -d "John,Phil,Tom"
+`,
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.
@@ -27,9 +32,11 @@ func Execute() {
 	}
 }
 
+// addSubCommands adds all the subcommands to the root command
 func addSubCommands() {
 	rootCmd.AddCommand(shortadr.ShortCmd)
 	rootCmd.AddCommand(longadr.LongCmd)
+	rootCmd.AddCommand(changestatus.StatusCmd)
 }
 
 func init() {
@@ -41,6 +48,5 @@ func init() {
 
 	// Cobra also supports local flags, which will only run
 	// when this action is called directly.
-	rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 	addSubCommands()
 }

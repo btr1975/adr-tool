@@ -22,6 +22,33 @@ const (
 	Superseded Status = "superseded"
 )
 
+// StringToStatus converts a string to a Status.
+//
+//	:param status: The string to convert to a Status.
+//
+// Example:
+//
+//	status, err := records.StringToStatus("accepted")
+func StringToStatus(status string) (Status, error) {
+	validStatuses := []string{"proposed", "accepted", "rejected", "deprecated", "superseded"}
+
+	switch status {
+	case "proposed":
+		return Proposed, nil
+	case "accepted":
+		return Accepted, nil
+	case "rejected":
+		return Rejected, nil
+	case "deprecated":
+		return Deprecated, nil
+	case "superseded":
+		return Superseded, nil
+	default:
+		return "", fmt.Errorf("%s not a valid status, valid statuses are %s", status,
+			strings.Join(validStatuses, ","))
+	}
+}
+
 // FileExists checks if a file exists and is not a directory before we try using it to prevent further errors.
 //
 //	:param path: The path to the file to check.
