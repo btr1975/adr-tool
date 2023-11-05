@@ -22,7 +22,11 @@ var deciders string
 var Cmd = &cobra.Command{
 	Use:   "long-adr",
 	Short: "Create a long ADR",
-	Long:  `Create a long ADR`,
+	Long: `Create a long ADR
+
+Example usage:
+	adr-tool long-adr -p ./dir -t "Some Title" -s "Statement of Decision" -o "opt 1" -o "opt 2" -o "opt 3" -d "John,Phil,Tom"
+`,
 	Run: func(cmd *cobra.Command, args []string) {
 		template := adr_templates.NewLongTemplate(title, deciders, statement, options)
 

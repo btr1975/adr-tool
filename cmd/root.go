@@ -18,9 +18,12 @@ var rootCmd = &cobra.Command{
 	Use:   "adr-tool",
 	Short: "A Simple tool for managing Architecture Decision Records",
 	Long: `A Simple tool for managing Architecture Decision Records
+
 Example usage:
-	adr-tool short-adr -p ./dir -t "Some Title" -s "Statement of Decision" -o "opt 1" -o "opt 2" -o "opt 3"
-	adr-tool long-adr -p ./dir -t "Some Title" -s "Statement of Decision" -o "opt 1" -o "opt 2" -o "opt 3" -d "John,Phil,Tom"
+	adr-tool change-status
+	adr-tool long-adr
+	adr-tool short-adr
+	adr-tool supersede
 `,
 }
 

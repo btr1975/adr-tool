@@ -21,7 +21,11 @@ var options []string
 var Cmd = &cobra.Command{
 	Use:   "short-adr",
 	Short: "Create a short ADR",
-	Long:  `Create a short ADR`,
+	Long: `Create a short ADR
+
+Example usage:
+	adr-tool short-adr -p ./dir -t "Some Title" -s "Statement of Decision" -o "opt 1" -o "opt 2" -o "opt 3"
+`,
 	Run: func(cmd *cobra.Command, args []string) {
 		template := adr_templates.NewShortTemplate(title, statement, options)
 

@@ -5,6 +5,9 @@ package supersede
 
 import (
 	"fmt"
+	"github.com/btr1975/adr-tool/pkg/adr_templates"
+	"github.com/btr1975/adr-tool/pkg/records"
+	"os"
 
 	"github.com/spf13/cobra"
 )
@@ -15,19 +18,49 @@ var longCmd = &cobra.Command{
 	Short: "Supersede with long ADR",
 	Long:  `Supersede with long ADR`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("long called")
+		template := adr_templates.NewLongTemplate(title, deciders, statement, options)
+
+		fileName, err := records.SupersedeADR(path, template, adr)
+
+		if err != nil {
+			fmt.Println(err)
+			os.Exit(1)
+		} else {
+			fmt.Printf("ADR created: %v\n", fileName)
+		}
 	},
 }
 
 func init() {
+	longCmd.Flags().StringVarP(&adr, "adr", "a", "", "ADR to supersede")
+	longCmd.Flags().StringVarP(&path, "path", "p", "", "Path to the ADR directory")
+	longCmd.Flags().StringVarP(&title, "title", "t", "", "Title of the ADR")
+	longCmd.Flags().StringVarP(&statement, "statement", "s", "", "Statement of the ADR")
+	longCmd.Flags().StringSliceVarP(&options, "options", "o", []string{}, "Options of the ADR")
+	longCmd.Flags().StringVarP(&deciders, "deciders", "d", "", "Deciders of the ADR")
 
-	// Here you will define your flags and configuration settings.
+	if err := longCmd.MarkFlagRequired("adr"); err != nil {
+		fmt.Println(err)
+	}
 
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// supersedelongCmd.PersistentFlags().String("foo", "", "A help for foo")
+	if err := longCmd.MarkFlagRequired("path"); err != nil {
+		fmt.Println(err)
+	}
 
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// supersedelongCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	if err := longCmd.MarkFlagRequired("title"); err != nil {
+		fmt.Println(err)
+	}
+
+	if err := longCmd.MarkFlagRequired("statement"); err != nil {
+		fmt.Println(err)
+	}
+
+	if err := longCmd.MarkFlagRequired("options"); err != nil {
+		fmt.Println(err)
+	}
+
+	if err := longCmd.MarkFlagRequired("deciders"); err != nil {
+		fmt.Println(err)
+	}
+
 }

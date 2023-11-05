@@ -8,6 +8,13 @@ import (
 	"github.com/spf13/cobra"
 )
 
+var deciders string
+var path string
+var title string
+var statement string
+var options []string
+var adr string
+
 // Cmd represents the Cmd command
 var Cmd = &cobra.Command{
 	Use:   "supersede",

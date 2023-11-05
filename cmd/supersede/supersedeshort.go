@@ -12,12 +12,6 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var path string
-var title string
-var statement string
-var options []string
-var adr string
-
 // shortCmd represents the shortCmd command
 var shortCmd = &cobra.Command{
 	Use:   "short",
