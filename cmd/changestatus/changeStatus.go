@@ -15,8 +15,8 @@ var path string
 var adr string
 var status string
 
-// StatusCmd represents the StatusCmd command
-var StatusCmd = &cobra.Command{
+// Cmd represents the Cmd command
+var Cmd = &cobra.Command{
 	Use:   "change-status",
 	Short: "Change ADR status",
 	Long:  `Change ADR status`,
@@ -40,19 +40,19 @@ var StatusCmd = &cobra.Command{
 }
 
 func init() {
-	StatusCmd.Flags().StringVarP(&path, "path", "p", "", "Path to the ADR directory")
-	StatusCmd.Flags().StringVarP(&adr, "adr", "a", "", "ADR to change status of")
-	StatusCmd.Flags().StringVarP(&status, "status", "s", "", "Status to change ADR to")
+	Cmd.Flags().StringVarP(&path, "path", "p", "", "Path to the ADR directory")
+	Cmd.Flags().StringVarP(&adr, "adr", "a", "", "ADR to change status of")
+	Cmd.Flags().StringVarP(&status, "status", "s", "", "Status to change ADR to")
 
-	if err := StatusCmd.MarkFlagRequired("path"); err != nil {
+	if err := Cmd.MarkFlagRequired("path"); err != nil {
 		fmt.Println(err)
 	}
 
-	if err := StatusCmd.MarkFlagRequired("adr"); err != nil {
+	if err := Cmd.MarkFlagRequired("adr"); err != nil {
 		fmt.Println(err)
 	}
 
-	if err := StatusCmd.MarkFlagRequired("status"); err != nil {
+	if err := Cmd.MarkFlagRequired("status"); err != nil {
 		fmt.Println(err)
 	}
 }

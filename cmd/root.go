@@ -7,6 +7,7 @@ import (
 	"github.com/btr1975/adr-tool/cmd/changestatus"
 	"github.com/btr1975/adr-tool/cmd/longadr"
 	"github.com/btr1975/adr-tool/cmd/shortadr"
+	"github.com/btr1975/adr-tool/cmd/supersede"
 	"os"
 
 	"github.com/spf13/cobra"
@@ -34,9 +35,10 @@ func Execute() {
 
 // addSubCommands adds all the subcommands to the root command
 func addSubCommands() {
-	rootCmd.AddCommand(shortadr.ShortCmd)
-	rootCmd.AddCommand(longadr.LongCmd)
-	rootCmd.AddCommand(changestatus.StatusCmd)
+	rootCmd.AddCommand(shortadr.Cmd)
+	rootCmd.AddCommand(longadr.Cmd)
+	rootCmd.AddCommand(changestatus.Cmd)
+	rootCmd.AddCommand(supersede.Cmd)
 }
 
 func init() {

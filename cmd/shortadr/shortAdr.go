@@ -17,8 +17,8 @@ var title string
 var statement string
 var options []string
 
-// ShortCmd represents the ShortCmd command
-var ShortCmd = &cobra.Command{
+// Cmd represents the Cmd command
+var Cmd = &cobra.Command{
 	Use:   "short-adr",
 	Short: "Create a short ADR",
 	Long:  `Create a short ADR`,
@@ -38,24 +38,24 @@ var ShortCmd = &cobra.Command{
 }
 
 func init() {
-	ShortCmd.Flags().StringVarP(&path, "path", "p", "", "Path to the ADR directory")
-	ShortCmd.Flags().StringVarP(&title, "title", "t", "", "Title of the ADR")
-	ShortCmd.Flags().StringVarP(&statement, "statement", "s", "", "Statement of the ADR")
-	ShortCmd.Flags().StringSliceVarP(&options, "options", "o", []string{}, "Options of the ADR")
+	Cmd.Flags().StringVarP(&path, "path", "p", "", "Path to the ADR directory")
+	Cmd.Flags().StringVarP(&title, "title", "t", "", "Title of the ADR")
+	Cmd.Flags().StringVarP(&statement, "statement", "s", "", "Statement of the ADR")
+	Cmd.Flags().StringSliceVarP(&options, "options", "o", []string{}, "Options of the ADR")
 
-	if err := ShortCmd.MarkFlagRequired("path"); err != nil {
+	if err := Cmd.MarkFlagRequired("path"); err != nil {
 		fmt.Println(err)
 	}
 
-	if err := ShortCmd.MarkFlagRequired("title"); err != nil {
+	if err := Cmd.MarkFlagRequired("title"); err != nil {
 		fmt.Println(err)
 	}
 
-	if err := ShortCmd.MarkFlagRequired("statement"); err != nil {
+	if err := Cmd.MarkFlagRequired("statement"); err != nil {
 		fmt.Println(err)
 	}
 
-	if err := ShortCmd.MarkFlagRequired("options"); err != nil {
+	if err := Cmd.MarkFlagRequired("options"); err != nil {
 		fmt.Println(err)
 	}
 }

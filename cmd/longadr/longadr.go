@@ -18,8 +18,8 @@ var statement string
 var options []string
 var deciders string
 
-// LongCmd represents the LongCmd command
-var LongCmd = &cobra.Command{
+// Cmd represents the Cmd command
+var Cmd = &cobra.Command{
 	Use:   "long-adr",
 	Short: "Create a long ADR",
 	Long:  `Create a long ADR`,
@@ -38,29 +38,29 @@ var LongCmd = &cobra.Command{
 }
 
 func init() {
-	LongCmd.Flags().StringVarP(&path, "path", "p", "", "Path to the ADR directory")
-	LongCmd.Flags().StringVarP(&title, "title", "t", "", "Title of the ADR")
-	LongCmd.Flags().StringVarP(&statement, "statement", "s", "", "Statement of the ADR")
-	LongCmd.Flags().StringSliceVarP(&options, "options", "o", []string{}, "Options of the ADR")
-	LongCmd.Flags().StringVarP(&deciders, "deciders", "d", "", "Deciders of the ADR")
+	Cmd.Flags().StringVarP(&path, "path", "p", "", "Path to the ADR directory")
+	Cmd.Flags().StringVarP(&title, "title", "t", "", "Title of the ADR")
+	Cmd.Flags().StringVarP(&statement, "statement", "s", "", "Statement of the ADR")
+	Cmd.Flags().StringSliceVarP(&options, "options", "o", []string{}, "Options of the ADR")
+	Cmd.Flags().StringVarP(&deciders, "deciders", "d", "", "Deciders of the ADR")
 
-	if err := LongCmd.MarkFlagRequired("path"); err != nil {
+	if err := Cmd.MarkFlagRequired("path"); err != nil {
 		fmt.Println(err)
 	}
 
-	if err := LongCmd.MarkFlagRequired("title"); err != nil {
+	if err := Cmd.MarkFlagRequired("title"); err != nil {
 		fmt.Println(err)
 	}
 
-	if err := LongCmd.MarkFlagRequired("statement"); err != nil {
+	if err := Cmd.MarkFlagRequired("statement"); err != nil {
 		fmt.Println(err)
 	}
 
-	if err := LongCmd.MarkFlagRequired("options"); err != nil {
+	if err := Cmd.MarkFlagRequired("options"); err != nil {
 		fmt.Println(err)
 	}
 
-	if err := LongCmd.MarkFlagRequired("deciders"); err != nil {
+	if err := Cmd.MarkFlagRequired("deciders"); err != nil {
 		fmt.Println(err)
 	}
 }
