@@ -1,6 +1,9 @@
 package records
 
 import (
+	"fmt"
+	"github.com/btr1975/adr-tool/pkg/adr_templates"
+	"os"
 	"path"
 	"testing"
 )
@@ -125,6 +128,81 @@ func TestDirectoryExists(t *testing.T) {
 			if actual != scenario.expected {
 				t.Errorf("expected %t, got %t", scenario.expected, actual)
 			}
+		})
+	}
+}
+
+func TestWriteNewADR(t *testing.T) {
+	scenarios := []struct {
+		name      string
+		path      string
+		title     string
+		statement string
+		options   []string
+	}{
+		{
+			name:      "write new ADR",
+			path:      path.Join("..", "..", "test", "long"),
+			title:     "My Title",
+			statement: "My Statement",
+			options:   []string{"Option 1", "Option 2"},
+		},
+	}
+
+	for _, scenario := range scenarios {
+		t.Run(scenario.name, func(t *testing.T) {
+			template := adr_templates.NewShortTemplate(scenario.title, scenario.statement, scenario.options)
+			fileName, err := WriteNewADR(scenario.path, template)
+			if err != nil {
+				t.Errorf("expected no error, got %v", err)
+			}
+			createdFileName := fmt.Sprintf("0001-%s", template.GetFileName())
+			if fileName != createdFileName {
+				t.Errorf("expected %s, got %s", createdFileName, fileName)
+			}
+			if !FileExists(path.Join(scenario.path, fileName)) {
+				t.Errorf("expected file to exist, got %s", fileName)
+			}
+			_ = os.Remove(path.Join(scenario.path, fileName))
+		})
+
+	}
+}
+
+func TestSupersedeADR(t *testing.T) {
+	scenarios := []struct {
+		name      string
+		path      string
+		title     string
+		statement string
+		options   []string
+		adr       string
+	}{
+		{
+			name:      "supersede ADR",
+			path:      path.Join("..", "..", "test", "supersede"),
+			title:     "My Title",
+			statement: "My Statement",
+			options:   []string{"Option 1", "Option 2"},
+			adr:       "0001-my-title.md",
+		},
+	}
+
+	for _, scenario := range scenarios {
+		t.Run(scenario.name, func(t *testing.T) {
+			template := adr_templates.NewShortTemplate(scenario.title, scenario.statement, scenario.options)
+			fileName, err := SupersedeADR(scenario.path, template, scenario.adr)
+			if err != nil {
+				t.Errorf("expected no error, got %v", err)
+			}
+			createdFileName := fmt.Sprintf("0003-%s", template.GetFileName())
+			if fileName != createdFileName {
+				t.Errorf("expected %s, got %s", createdFileName, fileName)
+			}
+			if !FileExists(path.Join(scenario.path, fileName)) {
+				t.Errorf("expected file to exist, got %s", fileName)
+			}
+			_ = os.Remove(path.Join(scenario.path, fileName))
 		})
 	}
 }
