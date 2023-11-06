@@ -13,6 +13,9 @@
 #
 BINARY_NAME=adr-tool
 BINARY_DIRECTORY=temp
+WINDOWS_BINARY_DIRECTORY=${BINARY_DIRECTORY}\windows-amd64
+LINUX_BINARY_DIRECTORY=${BINARY_DIRECTORY}\linux-amd64
+DARWIN_BINARY_DIRECTORY=${BINARY_DIRECTORY}\darwin-amd64
 
 .PHONY: all test coverage coverage-html format tidy build-windows build-linux build-darwin
 
@@ -37,10 +40,10 @@ tidy:
 build-all: build-windows build-linux build-darwin
 
 build-windows:
-	GOOS=windows GOARCH=amd64 go build -o ${BINARY_DIRECTORY}/${BINARY_NAME}-windows-amd64.exe
+	GOOS=windows GOARCH=amd64 go build -o ${WINDOWS_BINARY_DIRECTORY}/${BINARY_NAME}.exe
 
 build-linux:
-	GOOS=linux GOARCH=amd64 go build -o ${BINARY_DIRECTORY}/${BINARY_NAME}-linux-amd64
+	GOOS=linux GOARCH=amd64 go build -o ${LINUX_BINARY_DIRECTORY}/${BINARY_NAME}
 
 build-darwin:
-	GOOS=darwin GOARCH=amd64 go build -o ${BINARY_DIRECTORY}/${BINARY_NAME}-darwin-amd64
+	GOOS=darwin GOARCH=amd64 go build -o ${DARWIN_BINARY_DIRECTORY}/${BINARY_NAME}

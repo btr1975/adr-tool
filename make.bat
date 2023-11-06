@@ -15,6 +15,9 @@ REM     see docs for more info
 REM
 set BINARY_NAME=adr-tool
 set BINARY_DIRECTORY=temp
+set WINDOWS_BINARY_DIRECTORY=%BINARY_DIRECTORY%\windows-amd64
+set LINUX_BINARY_DIRECTORY=%BINARY_DIRECTORY%\linux-amd64
+set DARWIN_BINARY_DIRECTORY=%BINARY_DIRECTORY%\darwin-amd64
 
 IF "%1" == "all" (
     go fmt ./...
@@ -53,13 +56,13 @@ IF "%1" == "tidy" (
 IF "%1" == "build-all" (
     set GOOS=windows
     set GOARCH=amd64
-    go build -o %BINARY_DIRECTORY%\%BINARY_NAME%-windows-amd64.exe
+    go build -o %WINDOWS_BINARY_DIRECTORY%\%BINARY_NAME%.exe
     set GOOS=linux
     set GOARCH=amd64
-    go build -o %BINARY_DIRECTORY%\%BINARY_NAME%-linux-amd64
-    set GOOS=linux
+    go build -o %LINUX_BINARY_DIRECTORY%\%BINARY_NAME%
+    set GOOS=darwin
     set GOARCH=amd64
-    go build -o %BINARY_DIRECTORY%\%BINARY_NAME%-linux-amd64
+    go build -o %DARWIN_BINARY_DIRECTORY%\%BINARY_NAME%
     set GOOS=windows
     set GOARCH=amd64
     GOTO END
@@ -68,14 +71,14 @@ IF "%1" == "build-all" (
 IF "%1" == "build-windows" (
     set GOOS=windows
     set GOARCH=amd64
-    go build -o %BINARY_DIRECTORY%\%BINARY_NAME%-windows-amd64.exe
+    go build -o %WINDOWS_BINARY_DIRECTORY%\%BINARY_NAME%.exe
     GOTO END
 )
 
 IF "%1" == "build-linux" (
     set GOOS=linux
     set GOARCH=amd64
-    go build -o %BINARY_DIRECTORY%\%BINARY_NAME%-linux-amd64
+    go build -o %LINUX_BINARY_DIRECTORY%\%BINARY_NAME%
     set GOOS=windows
     set GOARCH=amd64
     GOTO END
@@ -84,7 +87,7 @@ IF "%1" == "build-linux" (
 IF "%1" == "build-darwin" (
     set GOOS=darwin
     set GOARCH=amd64
-    go build -o %BINARY_DIRECTORY%\%BINARY_NAME%-darwin-amd64
+    go build -o %DARWIN_BINARY_DIRECTORY%\%BINARY_NAME%
     set GOOS=windows
     set GOARCH=amd64
     GOTO END
