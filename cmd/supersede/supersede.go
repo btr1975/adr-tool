@@ -4,8 +4,8 @@ Package supersede implements the supersede command
 package supersede
 
 import (
-	"fmt"
 	"github.com/spf13/cobra"
+	"os"
 )
 
 var deciders string
@@ -21,7 +21,8 @@ var Cmd = &cobra.Command{
 	Short: "Supersede an ADR",
 	Long:  `Supersede an ADR`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("supersede called")
+		cmd.Help()
+		os.Exit(0)
 	},
 }
 
