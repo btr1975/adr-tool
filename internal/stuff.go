@@ -1,18 +1,25 @@
 package main
 
 import (
+	"fmt"
 	"github.com/btr1975/adr-tool/pkg/adr_templates"
-	"github.com/btr1975/adr-tool/pkg/records"
+	"os"
 )
 
 func main() {
-	template := adr_templates.NewShortTemplate("My Title Thing2", "My Statement", []string{"Option 1", "Option 2"})
+	template := adr_templates.NewLongTemplate("My Title", "John Doe, Jane Doe", "My Statement", []string{"Option 1", "Option 2"})
 
-	fileName, err := records.SupersedeADR("./temp", template, "0001-my-title.md")
+	rendered, err := template.Render()
 
 	if err != nil {
 		panic(err)
 	}
 
-	println(fileName)
+	fullPath := fmt.Sprintf("test/long/%v", template.GetFileName())
+
+	err = os.WriteFile(fullPath, []byte(rendered), 0644)
+
+	if err != nil {
+		panic(err)
+	}
 }

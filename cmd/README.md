@@ -2,6 +2,7 @@
 
 ### What goes here
 * "main" packages
+* Also cobra cli commands
 * These are things you want to make binaries out of
 
 ### Possible Structure

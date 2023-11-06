@@ -34,5 +34,5 @@ indent_size = 2
 indent_style = tab
 
 # Set *.cfg style
-[*.cfg]
+[*.{cfg,md}]
 insert_final_newline = false
