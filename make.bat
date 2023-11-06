@@ -13,6 +13,9 @@ REM
 REM     For compiling for ARM based architecture's you may require the GOARM variable
 REM     see docs for more info
 REM
+set BINARY_NAME=adr-tool
+set BINARY_DIRECTORY=temp
+
 IF "%1" == "all" (
     go fmt ./...
     go mod tidy
@@ -44,6 +47,46 @@ IF "%1" == "format" (
 
 IF "%1" == "tidy" (
     go mod tidy
+    GOTO END
+)
+
+IF "%1" == "build-all" (
+    set GOOS=windows
+    set GOARCH=amd64
+    go build -o %BINARY_DIRECTORY%\%BINARY_NAME%-windows-amd64.exe
+    set GOOS=linux
+    set GOARCH=amd64
+    go build -o %BINARY_DIRECTORY%\%BINARY_NAME%-linux-amd64
+    set GOOS=linux
+    set GOARCH=amd64
+    go build -o %BINARY_DIRECTORY%\%BINARY_NAME%-linux-amd64
+    set GOOS=windows
+    set GOARCH=amd64
+    GOTO END
+)
+
+IF "%1" == "build-windows" (
+    set GOOS=windows
+    set GOARCH=amd64
+    go build -o %BINARY_DIRECTORY%\%BINARY_NAME%-windows-amd64.exe
+    GOTO END
+)
+
+IF "%1" == "build-linux" (
+    set GOOS=linux
+    set GOARCH=amd64
+    go build -o %BINARY_DIRECTORY%\%BINARY_NAME%-linux-amd64
+    set GOOS=windows
+    set GOARCH=amd64
+    GOTO END
+)
+
+IF "%1" == "build-darwin" (
+    set GOOS=darwin
+    set GOARCH=amd64
+    go build -o %BINARY_DIRECTORY%\%BINARY_NAME%-darwin-amd64
+    set GOOS=windows
+    set GOARCH=amd64
     GOTO END
 )
 
