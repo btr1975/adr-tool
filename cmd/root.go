@@ -15,7 +15,7 @@ import (
 
 var versionFlag bool
 var Author = "Benjamin P. Trachtenberg"
-var Version = "0.0.1"
+var Version = "1.0.0"
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
