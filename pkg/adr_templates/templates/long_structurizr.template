@@ -1,8 +1,14 @@
 # {{.Title}}
 
-* Status: Proposed
-* Deciders: {{.Deciders}}
-* Date: {{.Date}}
+Date: {{.Date}}
+
+## Status
+
+Proposed
+
+## Deciders
+
+{{.Deciders}}
 
 ## Context and Problem Statement
 
@@ -10,15 +16,15 @@
 
 ## Considered Options
 {{ range .Options }}
-* {{ .}}
+    * {{ .}}
 {{- end }}
 
 ## Pros and Cons of the Options
 {{ range .Options }}
-### {{ .}}
+    ### {{ .}}
 
-* Good, because [argument a] <!-- example -->
-* Bad, because [argument b] <!-- example -->
+    * Good, because [argument a] <!-- example -->
+    * Bad, because [argument b] <!-- example -->
 {{ end }}
 
 ## Decision Outcome

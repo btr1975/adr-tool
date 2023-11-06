@@ -7,13 +7,34 @@ import (
 	"time"
 )
 
+// GetDateString returns a date string based on the dateType
+//
+//	:param dateType: The type of date to return.
+//
+// Example:
+//
+//	date := GetDateString("long")
+func GetDateString(dateType string) (date string) {
+	now := time.Now()
+
+	switch dateType {
+	case "long":
+		return fmt.Sprintf("%v", now.Format("Mon Jan 2 15:04:05 MST 2006"))
+	case "short":
+		return fmt.Sprintf("%v", now.Format("2006-01-02"))
+	default:
+		return fmt.Sprintf("%v", now.Format("01/02/2006"))
+	}
+}
+
 // ShortTemplate is a template with a Title, a Statement, and a list of Options.
 type ShortTemplate struct {
-	Title     string
-	Date      string
-	Statement string
-	Options   []string
-	FileName  string
+	Title       string
+	Date        string
+	Statement   string
+	Options     []string
+	FileName    string
+	useTemplate string
 }
 
 // NewShortTemplate returns a new ShortTemplate with the given title, statement, and options.
@@ -26,14 +47,15 @@ type ShortTemplate struct {
 //
 //	template := NewShortTemplate("My Title", "My Statement", []string{"Option 1", "Option 2"})
 func NewShortTemplate(title string, statement string, options []string) *ShortTemplate {
-	now := time.Now()
+	now := GetDateString("long")
 
 	return &ShortTemplate{
-		Title:     title,
-		Date:      fmt.Sprintf("%v", now.Format("Mon Jan 2 15:04:05 MST 2006")),
-		Statement: statement,
-		Options:   options,
-		FileName:  fmt.Sprintf("%v.md", strings.Join(strings.Split(strings.ToLower(title), " "), "-")),
+		Title:       title,
+		Date:        now,
+		Statement:   statement,
+		Options:     options,
+		FileName:    fmt.Sprintf("%v.md", strings.Join(strings.Split(strings.ToLower(title), " "), "-")),
+		useTemplate: "short.template",
 	}
 }
 
@@ -52,9 +74,7 @@ func (t *ShortTemplate) GetFileName() (name string) {
 //
 //	rendering, err := Render()
 func (t *ShortTemplate) Render() (rendering string, err error) {
-	templateName := "short.template"
-
-	tmpl, err := GetTemplate(templateName)
+	tmpl, err := GetTemplate(t.useTemplate)
 
 	if err != nil {
 		return "", err
@@ -62,7 +82,7 @@ func (t *ShortTemplate) Render() (rendering string, err error) {
 
 	bytesBuffer := bytes.Buffer{}
 
-	err = tmpl.ExecuteTemplate(&bytesBuffer, templateName, t)
+	err = tmpl.ExecuteTemplate(&bytesBuffer, t.useTemplate, t)
 
 	if err != nil {
 		return "", err
@@ -73,12 +93,13 @@ func (t *ShortTemplate) Render() (rendering string, err error) {
 
 // LongTemplate is a template with a Title, Deciders, Statement and a list of Options.
 type LongTemplate struct {
-	Title     string
-	Deciders  string
-	Date      string
-	Statement string
-	Options   []string
-	FileName  string
+	Title       string
+	Deciders    string
+	Date        string
+	Statement   string
+	Options     []string
+	FileName    string
+	useTemplate string
 }
 
 // NewLongTemplate returns a new LongTemplate with the given title, deciders, statement, and options.
@@ -92,15 +113,16 @@ type LongTemplate struct {
 //
 //	template := NewLongTemplate("My Title", "My Deciders", "My Statement", []string{"Option 1", "Option 2"})
 func NewLongTemplate(title string, deciders string, statement string, options []string) *LongTemplate {
-	now := time.Now()
+	now := GetDateString("long")
 
 	return &LongTemplate{
-		Title:     title,
-		Deciders:  deciders,
-		Date:      fmt.Sprintf("%v", now.Format("Mon Jan 2 15:04:05 MST 2006")),
-		Statement: statement,
-		Options:   options,
-		FileName:  fmt.Sprintf("%v.md", strings.Join(strings.Split(strings.ToLower(title), " "), "-")),
+		Title:       title,
+		Deciders:    deciders,
+		Date:        now,
+		Statement:   statement,
+		Options:     options,
+		FileName:    fmt.Sprintf("%v.md", strings.Join(strings.Split(strings.ToLower(title), " "), "-")),
+		useTemplate: "long.template",
 	}
 }
 
@@ -119,9 +141,7 @@ func (t *LongTemplate) GetFileName() (name string) {
 //
 //	rendering, err := Render()
 func (t *LongTemplate) Render() (rendering string, err error) {
-	templateName := "long.template"
-
-	tmpl, err := GetTemplate(templateName)
+	tmpl, err := GetTemplate(t.useTemplate)
 
 	if err != nil {
 		return "", err
@@ -129,7 +149,7 @@ func (t *LongTemplate) Render() (rendering string, err error) {
 
 	bytesBuffer := bytes.Buffer{}
 
-	err = tmpl.ExecuteTemplate(&bytesBuffer, templateName, t)
+	err = tmpl.ExecuteTemplate(&bytesBuffer, t.useTemplate, t)
 
 	if err != nil {
 		return "", err

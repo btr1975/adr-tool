@@ -1,7 +1,10 @@
 # {{.Title}}
 
-* Status: Proposed
-* Date: {{.Date}}
+Date: {{.Date}}
+
+## Status
+
+Proposed
 
 ## Context and Problem Statement
 
@@ -9,7 +12,7 @@
 
 ## Considered Options
 {{ range .Options }}
-* {{ .}}
+    * {{ .}}
 {{- end }}
 
 ## Decision Outcome

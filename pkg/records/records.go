@@ -15,11 +15,11 @@ import (
 type Status string
 
 const (
-	Proposed   Status = "proposed"
-	Accepted   Status = "accepted"
-	Rejected   Status = "rejected"
-	Deprecated Status = "deprecated"
-	Superseded Status = "superseded"
+	Proposed   Status = "Proposed"
+	Accepted   Status = "Accepted"
+	Rejected   Status = "Rejected"
+	Deprecated Status = "Deprecated"
+	Superseded Status = "Superseded"
 )
 
 // StringToStatus converts a string to a Status.
