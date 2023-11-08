@@ -30,7 +30,7 @@ Example usage:
 			fmt.Println(err)
 			os.Exit(1)
 		} else {
-			fmt.Printf("ADR created: %v\n", fileName)
+			fmt.Printf("ADR created: %v Supersedes %v \n", fileName, adr)
 		}
 	},
 }

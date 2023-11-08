@@ -38,7 +38,7 @@ Example usage:
 			fmt.Println(err)
 			os.Exit(1)
 		} else {
-			fmt.Printf("ADR status changed: %v\n", adr)
+			fmt.Printf("ADR status changed to %s: %v\n", string(statusType), adr)
 		}
 	},
 }

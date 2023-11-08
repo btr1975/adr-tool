@@ -295,7 +295,7 @@ func ChangeADRStatus(path string, adr string, status Status, supersede bool) (er
 		return err
 	}
 
-	regexStatus, err := regexp.Compile(`. Status: \S+`)
+	regexStatus, err := regexp.Compile(`Proposed|Accepted|Rejected|Deprecated|Superseded`)
 
 	if err != nil {
 		return err
@@ -307,7 +307,7 @@ func ChangeADRStatus(path string, adr string, status Status, supersede bool) (er
 		}
 	}
 
-	adrFile = regexStatus.ReplaceAll(adrFile, []byte(fmt.Sprintf("* Status: %s", status)))
+	adrFile = regexStatus.ReplaceAll(adrFile, []byte(fmt.Sprintf("%s", status)))
 
 	err = os.WriteFile(fullPath, adrFile, 0644)
 
