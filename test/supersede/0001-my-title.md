@@ -18,3 +18,5 @@ My Statement
 * [Superseded By: 0003-my-title.md](./0003-my-title.md)
 * [Superseded By: 0003-my-title.md](./0003-my-title.md)
 * [Superseded By: 0003-my-title.md](./0003-my-title.md)
+* [Superseded By: 0003-my-title.md](./0003-my-title.md)
+* [Superseded By: 0003-my-title.md](./0003-my-title.md)

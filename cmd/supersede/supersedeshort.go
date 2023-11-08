@@ -16,7 +16,12 @@ import (
 var shortCmd = &cobra.Command{
 	Use:   "short",
 	Short: "Supersede with short ADR",
-	Long:  `Supersede with short ADR`,
+	Long: `Supersede with short ADR
+
+Example usage:
+	adr-tool supersede short -p ./dir -a 0001-some-adr.md -t "Some Title" -s "Statement of Decision" -o "opt 1" -o "opt 2" -o "opt 3"
+	adr-tool supersede short -p ./dir -a 0001-some-adr.md -t "Some Title" -s "Statement of Decision"
+`,
 	Run: func(cmd *cobra.Command, args []string) {
 		template := adr_templates.NewShortTemplate(title, statement, options)
 
@@ -54,7 +59,4 @@ func init() {
 		fmt.Println(err)
 	}
 
-	if err := shortCmd.MarkFlagRequired("options"); err != nil {
-		fmt.Println(err)
-	}
 }

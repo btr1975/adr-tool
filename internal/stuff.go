@@ -2,12 +2,17 @@ package main
 
 import (
 	"fmt"
-	"time"
+	"github.com/btr1975/adr-tool/pkg/adr_templates"
 )
 
 func main() {
-	now := time.Now()
-	fmt.Println(fmt.Sprintf("%v", now.Format("Mon Jan 2 15:04:05 MST 2006")))
-	fmt.Println(fmt.Sprintf("%v", now.Format("2006-01-02")))
-	fmt.Println(fmt.Sprintf("%v", now.Format("01/02/2006")))
+	template := adr_templates.NewShortTemplate("Some Title", "Statement of Decision", []string{"opt 1", "opt 2", "opt 3"})
+
+	rendering, err := template.Render()
+
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Println(rendering)
 }

@@ -7,6 +7,7 @@
 
 {{.Statement}}
 
+{{ if .Options -}}
 ## Considered Options
 {{ range .Options }}
 * {{ .}}
@@ -15,3 +16,4 @@
 ## Decision Outcome
 
 [Decision outcome]
+{{ end -}}

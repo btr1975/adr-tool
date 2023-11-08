@@ -16,7 +16,11 @@ import (
 var longCmd = &cobra.Command{
 	Use:   "long",
 	Short: "Supersede with long ADR",
-	Long:  `Supersede with long ADR`,
+	Long: `Supersede with long ADR
+
+Example usage:
+	adr-tool supersede long -p ./dir -a 0001-some-adr.md -t "Some Title" -s "Statement of Decision" -o "opt 1" -o "opt 2" -o "opt 3" -d "John,Phil,Tom"
+`,
 	Run: func(cmd *cobra.Command, args []string) {
 		template := adr_templates.NewLongTemplate(title, deciders, statement, options)
 

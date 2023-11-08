@@ -1,6 +1,6 @@
 # My Title
 
-* Status: proposed
+* Status: Proposed
 * Date: Sun Nov 5 20:02:23 CST 2023
 
 ## Context and Problem Statement

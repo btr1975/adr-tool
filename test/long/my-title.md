@@ -1,6 +1,6 @@
 # My Title
 
-* Status: proposed
+* Status: Proposed
 * Deciders: John Doe, Jane Doe
 * Date: Sun Nov 5 20:28:18 CST 2023
 

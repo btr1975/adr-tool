@@ -19,7 +19,11 @@ var status string
 var Cmd = &cobra.Command{
 	Use:   "change-status",
 	Short: "Change ADR status",
-	Long:  `Change ADR status`,
+	Long: `Change ADR status
+
+Example usage:
+	adr-tool change-status -p ./dir -a 0001-some-adr.md -s accepted
+`,
 	Run: func(cmd *cobra.Command, args []string) {
 		statusType, err := records.StringToStatus(status)
 
