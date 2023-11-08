@@ -358,9 +358,9 @@ func AppendToFile(fullPath string, append string) (err error) {
 //	records.AppendSupersededBy("./", "0001-my-title.md", "0002-my-title.md")
 func AppendSupersededBy(path string, adr string, supersededBy string) (err error) {
 	supersededFullPath := fmt.Sprintf("%s/%s", path, adr)
-	supersededAppend := fmt.Sprintf("* [Superseded By: %s](./%s)\n", supersededBy, supersededBy)
+	supersededAppend := fmt.Sprintf("* [Superseded By: %s](%s)\n", supersededBy, supersededBy)
 	newFullPath := fmt.Sprintf("%s/%s", path, supersededBy)
-	newAppend := fmt.Sprintf("* [Supersedes: %s](./%s)\n", adr, adr)
+	newAppend := fmt.Sprintf("* [Supersedes: %s](%s)\n", adr, adr)
 
 	err = AppendToFile(supersededFullPath, supersededAppend)
 
