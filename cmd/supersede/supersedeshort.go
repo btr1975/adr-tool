@@ -41,7 +41,7 @@ func init() {
 	shortCmd.Flags().StringVarP(&path, "path", "p", "", "Path to the ADR directory")
 	shortCmd.Flags().StringVarP(&title, "title", "t", "", "Title of the ADR")
 	shortCmd.Flags().StringVarP(&statement, "statement", "s", "", "Statement of the ADR")
-	shortCmd.Flags().StringSliceVarP(&options, "options", "o", []string{}, "Options of the ADR")
+	shortCmd.Flags().StringSliceVarP(&options, "options", "o", []string{}, "Options of the ADR (optional)")
 
 	if err := shortCmd.MarkFlagRequired("adr"); err != nil {
 		fmt.Println(err)
