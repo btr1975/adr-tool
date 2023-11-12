@@ -6,7 +6,7 @@ import (
 )
 
 func main() {
-	template := adr_templates.NewShortTemplate("Some Title", "Statement of Decision", []string{"opt 1", "opt 2", "opt 3"})
+	template := adr_templates.NewShortTemplate("Some Title", "Statement of Decision", []string{"opt 1", "opt 2", "opt 3"}, false)
 
 	rendering, err := template.Render()
 

@@ -151,7 +151,7 @@ func TestWriteNewADR(t *testing.T) {
 
 	for _, scenario := range scenarios {
 		t.Run(scenario.name, func(t *testing.T) {
-			template := adr_templates.NewShortTemplate(scenario.title, scenario.statement, scenario.options)
+			template := adr_templates.NewShortTemplate(scenario.title, scenario.statement, scenario.options, false)
 			fileName, err := WriteNewADR(scenario.path, template)
 			if err != nil {
 				t.Errorf("expected no error, got %v", err)
@@ -190,7 +190,7 @@ func TestSupersedeADR(t *testing.T) {
 
 	for _, scenario := range scenarios {
 		t.Run(scenario.name, func(t *testing.T) {
-			template := adr_templates.NewShortTemplate(scenario.title, scenario.statement, scenario.options)
+			template := adr_templates.NewShortTemplate(scenario.title, scenario.statement, scenario.options, false)
 			fileName, err := SupersedeADR(scenario.path, template, scenario.adr)
 			if err != nil {
 				t.Errorf("expected no error, got %v", err)

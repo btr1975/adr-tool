@@ -17,6 +17,7 @@ var title string
 var statement string
 var options []string
 var deciders string
+var structurizr bool
 
 // Cmd represents the Cmd command
 var Cmd = &cobra.Command{
@@ -28,7 +29,7 @@ Example usage:
 	adr-tool long-adr -p ./dir -t "Some Title" -s "Statement of Decision" -o "opt 1" -o "opt 2" -o "opt 3" -d "John,Phil,Tom"
 `,
 	Run: func(cmd *cobra.Command, args []string) {
-		template := adr_templates.NewLongTemplate(title, deciders, statement, options)
+		template := adr_templates.NewLongTemplate(title, deciders, statement, options, structurizr)
 
 		fileName, err := records.WriteNewADR(path, template)
 
@@ -47,6 +48,7 @@ func init() {
 	Cmd.Flags().StringVarP(&statement, "statement", "s", "", "Statement of the ADR")
 	Cmd.Flags().StringSliceVarP(&options, "options", "o", []string{}, "Options of the ADR")
 	Cmd.Flags().StringVarP(&deciders, "deciders", "d", "", "Deciders of the ADR")
+	Cmd.Flags().BoolVarP(&structurizr, "structurizr-compat", "c", false, "Structurizr Compatible ADR")
 
 	if err := Cmd.MarkFlagRequired("path"); err != nil {
 		fmt.Println(err)

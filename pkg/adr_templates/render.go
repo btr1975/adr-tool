@@ -42,16 +42,26 @@ type ShortTemplate struct {
 //	:param title: The title of the ADR.
 //	:param statement: The statement of the ADR.
 //	:param options: The options of the ADR.
+//	:param structurizr: Structurizr compatible ADR.
 //
 // Example:
 //
 //	template := NewShortTemplate("My Title", "My Statement", []string{"Option 1", "Option 2"})
-func NewShortTemplate(title string, statement string, options []string) *ShortTemplate {
-	now := GetDateString("long")
+func NewShortTemplate(title string, statement string, options []string, structurizr bool) *ShortTemplate {
+	if structurizr {
+		return &ShortTemplate{
+			Title:       title,
+			Date:        GetDateString("short"),
+			Statement:   statement,
+			Options:     options,
+			FileName:    fmt.Sprintf("%v.md", strings.Join(strings.Split(strings.ToLower(title), " "), "-")),
+			useTemplate: "short_structurizr.template",
+		}
+	}
 
 	return &ShortTemplate{
 		Title:       title,
-		Date:        now,
+		Date:        GetDateString("long"),
 		Statement:   statement,
 		Options:     options,
 		FileName:    fmt.Sprintf("%v.md", strings.Join(strings.Split(strings.ToLower(title), " "), "-")),
@@ -108,17 +118,28 @@ type LongTemplate struct {
 //	:param deciders: The deciders of the ADR.
 //	:param statement: The statement of the ADR.
 //	:param options: The options of the ADR.
+//	:param structurizr: Structurizr compatible ADR.
 //
 // Example:
 //
 //	template := NewLongTemplate("My Title", "My Deciders", "My Statement", []string{"Option 1", "Option 2"})
-func NewLongTemplate(title string, deciders string, statement string, options []string) *LongTemplate {
-	now := GetDateString("long")
+func NewLongTemplate(title string, deciders string, statement string, options []string, structurizr bool) *LongTemplate {
+	if structurizr {
+		return &LongTemplate{
+			Title:       title,
+			Deciders:    deciders,
+			Date:        GetDateString("short"),
+			Statement:   statement,
+			Options:     options,
+			FileName:    fmt.Sprintf("%v.md", strings.Join(strings.Split(strings.ToLower(title), " "), "-")),
+			useTemplate: "long_structurizr.template",
+		}
+	}
 
 	return &LongTemplate{
 		Title:       title,
 		Deciders:    deciders,
-		Date:        now,
+		Date:        GetDateString("long"),
 		Statement:   statement,
 		Options:     options,
 		FileName:    fmt.Sprintf("%v.md", strings.Join(strings.Split(strings.ToLower(title), " "), "-")),

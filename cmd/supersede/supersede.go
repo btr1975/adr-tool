@@ -14,6 +14,7 @@ var title string
 var statement string
 var options []string
 var adr string
+var structurizr bool
 
 // Cmd represents the Cmd command
 var Cmd = &cobra.Command{

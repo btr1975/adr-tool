@@ -23,7 +23,7 @@ Example usage:
 	adr-tool supersede short -p ./dir -a 0001-some-adr.md -t "Some Title" -s "Statement of Decision"
 `,
 	Run: func(cmd *cobra.Command, args []string) {
-		template := adr_templates.NewShortTemplate(title, statement, options)
+		template := adr_templates.NewShortTemplate(title, statement, options, structurizr)
 
 		fileName, err := records.SupersedeADR(path, template, adr)
 
@@ -42,6 +42,7 @@ func init() {
 	shortCmd.Flags().StringVarP(&title, "title", "t", "", "Title of the ADR")
 	shortCmd.Flags().StringVarP(&statement, "statement", "s", "", "Statement of the ADR")
 	shortCmd.Flags().StringSliceVarP(&options, "options", "o", []string{}, "Options of the ADR (optional)")
+	shortCmd.Flags().BoolVarP(&structurizr, "structurizr-compat", "c", false, "Structurizr Compatible ADR")
 
 	if err := shortCmd.MarkFlagRequired("adr"); err != nil {
 		fmt.Println(err)

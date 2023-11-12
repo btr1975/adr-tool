@@ -27,7 +27,7 @@ func TestNewShortTemplate(t *testing.T) {
 	}
 
 	for _, scenario := range scenarios {
-		template := NewShortTemplate(scenario.title, scenario.statement, scenario.options)
+		template := NewShortTemplate(scenario.title, scenario.statement, scenario.options, false)
 		if template.Title != scenario.title {
 			t.Error("Title is not correct")
 		}
@@ -79,7 +79,7 @@ func TestNewLongTemplate(t *testing.T) {
 	}
 
 	for _, scenario := range scenarios {
-		template := NewLongTemplate(scenario.title, scenario.deciders, scenario.statement, scenario.options)
+		template := NewLongTemplate(scenario.title, scenario.deciders, scenario.statement, scenario.options, false)
 		if template.Title != scenario.title {
 			t.Error("Title is not correct")
 		}
